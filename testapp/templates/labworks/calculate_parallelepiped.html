@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вычисление объема</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+        h2 {
+            color: #333;
+            font-size: 32px; /* Увеличено */
+        }
+        form {
+            background: white;
+            padding: 30px; /* Увеличено */
+            width: 450px; /* Увеличено */
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-size: 18pt; /* Увеличено */
+            font-weight: bold;
+            display: block;
+            margin-top: 15px; /* Увеличено */
+        }
+        input[type="number"], input[type="text"] {
+            width: 95%; /* Увеличено */
+            padding: 12px; /* Увеличено */
+            margin-top: 8px; /* Увеличено */
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 18pt; /* Увеличено */
+            text-align: center;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px; /* Увеличено */
+            cursor: pointer;
+            font-size: 18pt; /* Увеличено */
+            border-radius: 6px;
+            width: 48%; /* Кнопки теперь в ряд */
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 20pt; /* Увеличено */
+            font-weight: bold;
+            margin-top: 25px; /* Увеличено */
+        }
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Вычисление объема параллелепипеда</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>Длина (см):</label>
+        <input type="number" name="length" step="0.01" value="{{ length }}" required>
+
+        <label>Ширина (см):</label>
+        <input type="number" name="width" step="0.01" value="{{ width }}" required>
+
+        <label>Высота (см):</label>
+        <input type="number" name="height" step="0.01" value="{{ height }}" required>
+
+        <label>Объем:</label>
+        <input type="text" value="{{ result }}" disabled>
+
+        <div class="button-container">
+            <input type="submit" name="calculate" value="Вычислить">
+            <input type="submit" name="clear" value="Очистить">
+        </div>
+
+        <br><br>
+        <a href="/testapp/">На главную страницу</a>
+    </form>
+</body>
+</html>
+
+
+

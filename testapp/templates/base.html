@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexGo</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="{% url 'landing' %}">LexGo</a>
+        </div>
+        <nav class="nav-menu">
+            {% if user.is_authenticated %}
+                <div class="user-menu">
+                    <a href="{% url 'profile' %}">Профиль</a>
+                    <a href="{% url 'logout' %}">Выйти</a>
+                    <div class="avatar-circle">
+                        <span class="initial">{{ user.username|first|upper }}</span>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LexGo</p>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="landing-container">
+    <h1>Добро пожаловать в LexGo</h1>
+    <p>Платформа, где пользователи могут размещать заказы, искать исполнителей и работать вместе.</p>
+    <a href="{% url 'register' %}" class="primary-btn">Присоединиться</a>
+
+    <div class="info-section">
+        <div class="info-card">
+            <img src="{% static 'img/orders.png' %}" alt="Заказы">
+            <h3>Размещайте заказы</h3>
+            <p>Публикуйте задания и находите исполнителей быстро и удобно.</p>
+        </div>
+
+        <div class="info-card">
+            <img src="{% static 'img/work.png' %}" alt="Работа">
+            <h3>Ищите работу</h3>
+            <p>Выбирайте интересные проекты и предлагайте свои услуги.</p>
+        </div>
+
+        <div class="info-card">
+            <img src="{% static 'img/security.png' %}" alt="Безопасность">
+            <h3>Надежность</h3>
+            <p>Система рейтингов и отзывов помогает находить проверенных пользователей.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+

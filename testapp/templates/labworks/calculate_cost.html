@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вычисление стоимости покупки</title>
+</head>
+<body>
+
+    <h2>Вычисление стоимости покупки</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label>Цена одного килограмма яблок (тг.): </label>
+        <input type="number" name="price" step="0.01" required> <br><br>
+
+        <label>Вес яблок (кг.): </label>
+        <input type="number" name="weight" step="0.01" style="margin-left:145px" required> <br><br>
+
+        <label>Стоимость покупки: </label>
+        <input type="text" name="result" value="{{ result }}" style="margin-left:110px" disabled> <br><br>
+
+        <input type="submit" name="calculate" value="Выполнить" style="margin-left:50px; padding: 0.375rem 0.75rem; width: 130px;">
+        <input type="submit" name="clear" value="Очистить" style="margin-left:60px; padding: 0.375rem 0.75rem; width: 130px;">
+    </form>
+
+</body>
+</html>

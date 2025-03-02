@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Вычисление площади поверхности куба </title>
+</head>
+<body>
+    <form method = "post">
+        {% csrf_token %}
+        <h2> Вычисление площади поверхности куба </h2>
+        <label> Длина стороны куба: </label>
+        <input type = "number" name = "weight" value = "{{ weight }}" style="margin-left:60px" required> <br><br>
+        <label> Площадь поверхности куба: </label>
+        <input type = "text" name = "result" value = "{{ result }}" style="margin-left:10px" disabled> <br><br>
+        <br>
+        <input type = "submit" name = "calculate" value = "Вычислить" style="margin-left:50px; padding: 0.375rem 0.75rem; width: 130px;">
+        <input type = "submit" name = "clear" value = "Очистить" style="margin-left:60px; padding: 0.375rem 0.75rem; width: 130px;">
+        <br> <br> <br>
+        <a style="font-size: 16pt; margin-left: 30px;" href="/testapp/">
+            <b> На главную страницу </b> </a> <br>
+    </form>
+</body>
+</html>
