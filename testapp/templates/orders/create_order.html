@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Создать заказ</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset>
+        <legend>Категория:</legend>
+        {% for value, name in form.fields.category.choices %}
+            <label>
+                <input type="radio" name="category" value="{{ value }}" {% if form.category.value == value %}checked{% endif %} onchange="this.form.submit()"> {{ name }}
+            </label><br>
+        {% endfor %}
+    </fieldset>
+
+    <fieldset>
+        <legend>Бренд:</legend>
+        {% for value, name in form.fields.brand.choices %}
+            <label>
+                <input type="radio" name="brand" value="{{ value }}" {% if form.brand.value == value %}checked{% endif %}> {{ name }}
+            </label><br>
+        {% endfor %}
+    </fieldset>
+
+    {{ form.as_p }}
+    <button type="submit">Создать заказ</button>
+</form>
+{% endblock %}
+
+
+
+
+

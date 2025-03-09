@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LexGo</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <header>
@@ -20,6 +21,8 @@
                     <div class="avatar-circle">
                         <span class="initial">{{ user.username|first|upper }}</span>
                     </div>
+                    <a href="{% url 'create_order' %}">Создать заказ</a>
+                    <a href="{% url 'order_list' %}">Мои заказы</a>
                 </div>
             {% else %}
                 <a href="{% url 'login' %}">Войти</a>

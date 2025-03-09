@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 style="text-align: center;">Список заказов</h2>
+
+<!-- Фильтр по категориям -->
+<form method="get" style="text-align: center; margin-bottom: 20px;">
+    <label for="category">Фильтр по категории:</label>
+    <select name="category" id="category" onchange="this.form.submit()">
+        <option value="">Все категории</option>
+        {% for value, label in categories %}
+            <option value="{{ value }}" {% if request.GET.category == value %}selected{% endif %}>
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+
+<div class="orders-container">
+    {% for order in orders %}
+        <div class="order">
+            <h3>{{ order.title }}</h3>
+            <p>{{ order.description }}</p>
+            <p><strong>Категория:</strong> {{ order.get_category_display }}</p>
+            <img src="/testapp/media/{{ order.image }}" alt="Изображение заказа">
+
+            <a href="{% url 'edit_order' order.id %}" class="edit-btn">✏️ Редактировать</a>
+
+            <form method="post" action="{% url 'delete_order' order.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">❌ Удалить</button>
+            </form>
+        </div>
+    {% empty %}
+        <p style="text-align: center;">Нет заказов в выбранной категории.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+
+
+

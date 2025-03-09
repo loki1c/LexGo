@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Order, BRAND_CHOICES, CATEGORY_CHOICES
+
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -8,7 +9,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["username", "email", "password"]
+        fields = ["username", "email", "password", "password_confirm"]
 
     def clean(self):
         cleaned_data = super().clean()
@@ -30,3 +31,31 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = []  # Убираем avatar
 
+
+class OrderForm(forms.ModelForm):
+    category = forms.ChoiceField(
+        choices=CATEGORY_CHOICES,
+        widget=forms.RadioSelect,
+        label="Категория"
+    )
+    brand = forms.ChoiceField(
+        choices=[],  # Заполним динамически в __init__
+        widget=forms.RadioSelect,
+        label="Бренд"
+    )
+
+    class Meta:
+        model = Order
+        fields = ['title', 'description', 'category', 'brand', 'image']
+
+    def __init__(self, *args, **kwargs):
+        super(OrderForm, self).__init__(*args, **kwargs)
+
+        if 'category' in self.data:
+            category = self.data.get('category')
+        elif self.instance.pk:
+            category = self.instance.category
+        else:
+            category = None
+
+        self.fields['brand'].choices = BRAND_CHOICES.get(category, [("", "Выберите бренд")])

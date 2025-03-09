@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Редактировать заказ</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset>
+        <legend>Категория:</legend>
+        {% for value, name in form.fields.category.choices %}
+            <label>
+                <input type="radio" name="category" value="{{ value }}" {% if form.instance.category == value %}checked{% endif %}> {{ name }}
+            </label><br>
+        {% endfor %}
+    </fieldset>
+
+    <fieldset>
+        <legend>Бренд:</legend>
+        {% for value, name in form.fields.brand.choices %}
+            <label>
+                <input type="radio" name="brand" value="{{ value }}" {% if form.instance.brand == value %}checked{% endif %}> {{ name }}
+            </label><br>
+        {% endfor %}
+    </fieldset>
+
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+<a href="{% url 'order_list' %}">Назад к заказам</a>
+{% endblock %}
+
+
+

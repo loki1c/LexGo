@@ -229,4 +229,89 @@ nav a:hover {
     color: #666;
     line-height: 1.5;
 }
+/* Контейнер для заказов */
+.orders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрируем по горизонтали */
+}
+
+/* Карточка заказа */
+.order {
+    width: 60%;
+    max-width: 500px;
+    background: #f8f8f8;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Заголовок заказа */
+.order h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+/* Описание заказа */
+.order p {
+    font-size: 14px;
+    color: #555;
+    word-wrap: break-word;
+}
+
+/* Исправление отображения изображения */
+.order img {
+    width: 100%;  /* Ширина 100% от контейнера */
+    height: auto; /* Автоматическая высота, чтобы не искажать изображение */
+    max-height: 300px; /* Ограничиваем высоту, но без обрезки */
+    object-fit: contain; /* Показываем всю картинку без обрезки */
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+/* Кнопки */
+.edit-btn, .delete-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.edit-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Радио-кнопки */
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Выравнивание категорий */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
 

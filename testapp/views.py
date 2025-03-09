@@ -1,14 +1,12 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import RegisterForm
-from .forms import LoginForm
+from .forms import RegisterForm, OrderForm, ProfileForm, LoginForm
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import Profile
-from .forms import ProfileForm
+from .models import Profile, Order
 
 def index(request):
     return HttpResponse("Hello, world! You're at the polls index.")
@@ -78,11 +76,16 @@ def calculate_parallelepiped(request):
 def landing(request):
     return render(request, 'view/landing.html')
 
+
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+
+            # ✅ Создаём профиль сразу после регистрации
+            Profile.objects.create(user=user)
+
             messages.success(request, "Регистрация прошла успешно!")
             return redirect('login')
     else:
@@ -98,7 +101,7 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect("landing")
+            return redirect(resolve_url("landing"))  # <-- Убедись, что "landing" есть в urls.py
 
     return render(request, "auth/login.html", {"form": form})
 
@@ -121,3 +124,52 @@ def profile(request):
         form = ProfileForm(instance=profile)
 
     return render(request, 'profile/profile.html', {'form': form})
+
+def create_order(request):
+    if request.method == "POST":
+        form = OrderForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('order_list')  # Перенаправляем на список заказов
+    else:
+        form = OrderForm()
+
+    return render(request, 'orders/create_order.html', {'form': form})
+
+CATEGORY_CHOICES = [
+    ('phones', 'Телефоны и гаджеты'),
+    ('appliances', 'Бытовая техника'),
+    ('tv_audio', 'ТВ, Аудио и Видео'),
+    ('computers', 'Компьютеры'),
+    ('home_goods', 'Товары для дома'),
+]
+
+def order_list(request):
+    category = request.GET.get('category')  # Получаем категорию из запроса
+    orders = Order.objects.all()
+
+    if category:
+        orders = orders.filter(category=category)  # Фильтруем заказы
+
+    return render(request, 'orders/order_list.html', {
+        'orders': orders,
+        'categories': CATEGORY_CHOICES,
+    })
+
+def delete_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == "POST":
+        order.delete()
+    return redirect('order_list')
+
+# Форма редактирования заказа (страница отдельно)
+def edit_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == "POST":
+        form = OrderForm(request.POST, request.FILES, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('order_list')
+    else:
+        form = OrderForm(instance=order)
+    return render(request, 'orders/edit_order.html', {'form': form, 'order': order})
